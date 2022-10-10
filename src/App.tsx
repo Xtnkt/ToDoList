@@ -14,6 +14,10 @@ function App() {
         {id: v1(), title: "ReactJS", isDone: false},
     ]);
 
+    const changeIsDone = (newId:string, newIsDone:boolean) => {
+        setTasks(tasks.map(el=>el.id ===newId? {...el, isDone:newIsDone} : el))
+    }
+
     const addTask = (newTitle: string) => {
         const newTask = {id: v1(), title: newTitle, isDone: false}
         setTasks([newTask, ...tasks])
@@ -25,6 +29,7 @@ function App() {
     };
 
     let [filter, setFilter] = useState<FilterButtonType>('All')
+    const[nameButton, setNameButton]=useState<FilterButtonType>('All')
 
     let tasksForToDoList = tasks;
 
@@ -36,7 +41,8 @@ function App() {
     }
 
     function changeFilter(value: FilterButtonType) {
-        setFilter(value)
+        setFilter(value);
+        setNameButton(value);
     }
 
 
@@ -48,6 +54,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeIsDone={changeIsDone}
+                nameButton={nameButton}
             />
         </div>
     );
