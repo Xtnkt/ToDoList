@@ -12,7 +12,6 @@ export const CheckBox = (props: CheckBoxType) => {
     return (
             <input type="checkbox"
                    checked={props.checked}
-                   // onChange={(event: ChangeEvent<HTMLInputElement>)=>changeIsDoneHandler(t.id, event.currentTarget.checked)}/>
                    onChange={onChangeHandler}/>
     );
 };

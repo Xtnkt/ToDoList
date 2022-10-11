@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import styles from '../TodoList.module.css'
-import {FilterButtonType} from "../Todolist";
+import React from 'react';
 
 type ButtonType = {
     name: string,
