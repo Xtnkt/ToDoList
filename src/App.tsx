@@ -3,6 +3,8 @@ import './App.css';
 import {FilterButtonType, TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
 export type TodoListType = {
     id: string,
@@ -111,28 +113,52 @@ function App() {
     const todoListComponents = todoLists.map(tl => {
         const filteredTasks = getFilteredTasks(tl.filter, tasks[tl.id])
         return (
-            <Todolist
-                key={tl.id}
-                todoListId={tl.id}
-                title={tl.title}
-                filter={tl.filter}
-                tasks={filteredTasks}
+            <Grid item  key={tl.id}>
+                <Paper
+                    elevation={8}
+                    style={{width: '290px', padding: '20px'}}>
+                    <Todolist
+                        todoListId={tl.id}
+                        title={tl.title}
+                        filter={tl.filter}
+                        tasks={filteredTasks}
 
-                addTask={addTask}
-                removeTask={removeTask}
-                changeIsDone={changeIsDone}
-                changeTuskTitle={changeTuskTitle}
-                removeTodoList={removeTodoList}
-                changeTodoListFilter={changeTodoListFilter}
-                changeTodoListTitle={changeTodoListTitle}
-            />
+                        addTask={addTask}
+                        removeTask={removeTask}
+                        changeIsDone={changeIsDone}
+                        changeTuskTitle={changeTuskTitle}
+                        removeTodoList={removeTodoList}
+                        changeTodoListFilter={changeTodoListFilter}
+                        changeTodoListTitle={changeTodoListTitle}
+                    />
+                </Paper>
+            </Grid>
+
+
         )
     })
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodoList}/>
-            {todoListComponents}
+            <AppBar position="static">
+                <Toolbar style={{justifyContent: 'space-between'}}>
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        TodoLists
+                    </Typography>
+                    <Button color="inherit" variant={"outlined"}>Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container>
+                <Grid container style={{padding:'20px 0'}}>
+                    <AddItemForm addItem={addTodoList}/>
+                </Grid>
+                <Grid container spacing={5}>
+                    {todoListComponents}
+                </Grid>
+            </Container>
         </div>
     );
 }
