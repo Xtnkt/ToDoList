@@ -29,7 +29,7 @@ function App() {
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false},
+            {id: v1(), title: "Redux", isDone: false},
         ],
         [todoListId_2]: [
             {id: v1(), title: "Water", isDone: true},
@@ -40,6 +40,7 @@ function App() {
     })
     //BLL
 
+    //Tasks
     //Delete:
     const removeTask = (taskId: string, todoListId: string) => {
         // const copyTasks = {...tasks}
@@ -75,13 +76,8 @@ function App() {
                 : t)
         })
     }
-    //Update:
-    const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
-        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
-    }
-    const changeTodoListTitle = (title: string, todoListId: string) => {
-        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, title: title} : tl))
-    }
+
+    //TodoLists
     //Delete:
     const removeTodoList = (todoListId: string) => {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListId))
@@ -98,6 +94,15 @@ function App() {
         setTodoLists([...todoLists, newTodoList])
         setTasks({...tasks, [newTodoListId]: []})
     }
+    //Update:
+    const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: filter} : tl))
+    }
+    const changeTodoListTitle = (title: string, todoListId: string) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, title: title} : tl))
+    }
+
+
     //Update:
     const getFilteredTasks = (value: FilterButtonType, t: Array<TaskType>) => {
         let tasksForToDoList = t;
@@ -133,8 +138,6 @@ function App() {
                     />
                 </Paper>
             </Grid>
-
-
         )
     })
 
