@@ -2,11 +2,11 @@ import {TodoListType} from "../App";
 import {FilterButtonType} from "../Todolist";
 import {v1} from "uuid";
 
-type RemoveTodoListAT = {
+export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST',
     todoListId: string
 }
-type AddTodoListAT = {
+export type AddTodoListAT = {
     type: 'ADD-TODOLIST',
     title: string,
     todoListId: string
