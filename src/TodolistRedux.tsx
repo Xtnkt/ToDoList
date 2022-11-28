@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TasksStateType, TodoListType} from "./AppWithRedux";
+import { TodoListType} from "./AppWithRedux";
 import {Button, ButtonGroup, IconButton, List, ListItem} from "@material-ui/core";
 import styles from "./TodoList.module.css";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -15,6 +15,7 @@ import {ChangeTodoListFilterAC, ChangeTodoListTitleAC, RemoveTodoListAC} from ".
 export type TodolistReduxPropsType = {
     todoList: TodoListType
 }
+
 export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
 
     const {id, title, filter} = todoList

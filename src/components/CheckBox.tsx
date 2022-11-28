@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox} from "@material-ui/core";
 import DoneIcon from '@material-ui/icons/Done';
 
@@ -7,10 +7,10 @@ type CheckBoxType = {
     callBack: (isDone: boolean) => void
 }
 
-export const CheckBox = (props: CheckBoxType) => {
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+export const CheckBox = memo((props: CheckBoxType) => {
+    const onChangeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         props.callBack(event.currentTarget.checked)
-    }
+    },[props.callBack])
     return (
         <Checkbox
             checkedIcon={<DoneIcon />}
@@ -20,5 +20,5 @@ export const CheckBox = (props: CheckBoxType) => {
             checked={props.checked}
             onChange={onChangeHandler}/>
     );
-};
+});
 
