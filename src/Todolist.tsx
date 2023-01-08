@@ -58,29 +58,29 @@ export const Todolist = React.memo((props: TodolistProps) => {
         props.changeTodoListTitle(title, props.todoListId)
     }, [props.changeTodoListTitle, props.todoListId]);
 
-    // const removeTaskHandler = useCallback((tId: string) => {
-    //     props.removeTask(tId, props.todoListId)
-    // }, [props.removeTask, props.todoListId]);
-    //
-    // const changeIsDoneHandler = useCallback((tId: string, isDone: boolean) => {
-    //     props.changeIsDone(tId, isDone, props.todoListId)
-    // }, [props.changeIsDone, props.todoListId]);
-    //
-    // const changeTuskTitle = useCallback((taskId: string, title: string) => {
-    //     props.changeTuskTitle(taskId, title, props.todoListId)
-    // }, [props.changeTuskTitle, props.todoListId]);
+    const removeTaskHandler = useCallback((tId: string) => {
+        props.removeTask(tId, props.todoListId)
+    }, [props.removeTask, props.todoListId]);
+
+    const changeIsDoneHandler = useCallback((tId: string, isDone: boolean) => {
+        props.changeIsDone(tId, isDone, props.todoListId)
+    }, [props.changeIsDone, props.todoListId]);
+
+    const changeTuskTitle = useCallback((taskId: string, title: string) => {
+        props.changeTuskTitle(taskId, title, props.todoListId)
+    }, [props.changeTuskTitle, props.todoListId]);
 
     const mapTasks = tasks.map((t) => {
         // const changeTuskTitle = (title: string) => {
         //     props.changeTuskTitle(t.id, title, props.todoListId)
         // }
         return (
-            // <Task key={t.id}
-            //       task={t}
-            //       removeTask={removeTaskHandler}
-            //       changeTuskTitle={changeTuskTitle}
-            //       changeIsDone={changeIsDoneHandler}/>
-            <TaskWithRedux key={t.id} task={t} todolistId={props.todoListId}/>
+            <Task key={t.id}
+                  task={t}
+                  removeTask={removeTaskHandler}
+                  changeTuskTitle={changeTuskTitle}
+                  changeIsDone={changeIsDoneHandler}/>
+            // <TaskWithRedux key={t.id} task={t} todolistId={props.todoListId}/>
             // <ListItem key={t.id}
             //           className={t.isDone ? styles.isDone : ''}
             //           style={{padding: '0px'}}>
@@ -128,23 +128,6 @@ export const Todolist = React.memo((props: TodolistProps) => {
                     color={props.filter === 'Completed' ? "secondary" : 'primary'}
                     title={'Completed'}
                 />
-                {/*<Button*/}
-                {/*    color={props.filter === 'All' ? "secondary" : 'primary'}*/}
-                {/*    style={{marginRight: '5px'}}*/}
-                {/*    // className={props.filter === 'All' ? styles.activeFilter : ''}*/}
-                {/*    onClick={tsarChangeFilter('All')}*/}
-                {/*>All</Button>*/}
-                {/*<Button*/}
-                {/*    color={props.filter === 'Active' ? "secondary" : 'primary'}*/}
-                {/*    style={{marginRight: '5px'}}*/}
-                {/*    // className={props.filter === 'Active' ? styles.activeFilter : ''}*/}
-                {/*    onClick={tsarChangeFilter('Active')}*/}
-                {/*>Active</Button>*/}
-                {/*<Button*/}
-                {/*    color={props.filter === 'Completed' ? "secondary" : 'primary'}*/}
-                {/*    // className={props.filter === 'Completed' ? styles.activeFilter : ''}*/}
-                {/*    onClick={tsarChangeFilter('Completed')}*/}
-                {/*>Completed</Button>*/}
             </ButtonGroup>
         </div>
     )
@@ -169,3 +152,21 @@ const ButtonWithMemo = React.memo((props: ButtonWithMemoPropsType) => {
         >{props.title}</Button>
     )
 })
+
+{/*<Button*/}
+{/*    color={props.filter === 'All' ? "secondary" : 'primary'}*/}
+{/*    style={{marginRight: '5px'}}*/}
+{/*    // className={props.filter === 'All' ? styles.activeFilter : ''}*/}
+{/*    onClick={tsarChangeFilter('All')}*/}
+{/*>All</Button>*/}
+{/*<Button*/}
+{/*    color={props.filter === 'Active' ? "secondary" : 'primary'}*/}
+{/*    style={{marginRight: '5px'}}*/}
+{/*    // className={props.filter === 'Active' ? styles.activeFilter : ''}*/}
+{/*    onClick={tsarChangeFilter('Active')}*/}
+{/*>Active</Button>*/}
+{/*<Button*/}
+{/*    color={props.filter === 'Completed' ? "secondary" : 'primary'}*/}
+{/*    // className={props.filter === 'Completed' ? styles.activeFilter : ''}*/}
+{/*    onClick={tsarChangeFilter('Completed')}*/}
+{/*>Completed</Button>*/}
