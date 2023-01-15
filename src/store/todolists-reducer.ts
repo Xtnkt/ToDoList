@@ -1,6 +1,8 @@
-import {TodoListType} from "../App";
 import {FilterButtonType} from "../Todolist";
 import {v1} from "uuid";
+import {ResponseTodoListType, todolistAPI} from "../api/todolist-api";
+import {TodoListType} from "../App";
+import {Dispatch} from "redux";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST',
@@ -21,8 +23,8 @@ type ChangeTodoListTitleAT = {
     title: string,
     todoListId: string
 }
-
-type ActionType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListFilterAT | ChangeTodoListTitleAT
+export type SeTodoListsAT = ReturnType<typeof SeTodoListsAC>
+type ActionType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListFilterAT | ChangeTodoListTitleAT | SeTodoListsAT
 
 export const RemoveTodoListAC = (id: string): RemoveTodoListAT =>
     ({type: "REMOVE-TODOLIST", todoListId: id})
@@ -36,11 +38,13 @@ export const AddTodoListAC = (newTodolistTitle: string): AddTodoListAT =>
 export const ChangeTodoListTitleAC = (newTodolistTitle: string, newTodolistId: string): ChangeTodoListTitleAT =>
     ({type: "CHANGE-TODOLIST-TITLE", title: newTodolistTitle, todoListId: newTodolistId})
 
-const initialState:Array<TodoListType> = [
+export const SeTodoListsAC = (todos: ResponseTodoListType[]) => {
+    return {type: 'SET-TODOS', todos} as const
+}
 
-]
+const initialState: Array<TodoListType> = []
 
-export const todolistsReducer = (todolists=initialState, action: ActionType): Array<TodoListType> => {
+export const todolistsReducer = (todolists = initialState, action: ActionType): Array<TodoListType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST":
             return todolists.filter(tl => tl.id !== action.todoListId)
@@ -56,7 +60,16 @@ export const todolistsReducer = (todolists=initialState, action: ActionType): Ar
             return todolists.map(tl => tl.id === action.todoListId ? {...tl, filter: action.filter} : tl)
         case "CHANGE-TODOLIST-TITLE":
             return todolists.map(tl => tl.id === action.todoListId ? {...tl, title: action.title} : tl)
+        case "SET-TODOS":
+            return action.todos.map(el => ({...el, filter: 'All'}))
         default:
             return todolists
     }
+}
+
+export const getTodoTC = () => (dispatch: Dispatch) => {
+    todolistAPI.getTodoLists()
+        .then((res) => {
+            dispatch(SeTodoListsAC(res))
+        })
 }

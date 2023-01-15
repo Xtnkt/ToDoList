@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import styles from './TodoList.module.css'
 import {CheckBox} from "./components/CheckBox";
 import {AddItemForm} from "./components/AddItemForm";
@@ -7,6 +7,8 @@ import {Button, ButtonGroup, IconButton, List, ListItem} from "@material-ui/core
 import DeleteIcon from '@material-ui/icons/Delete';
 import Task from "./components/Task";
 import {TaskWithRedux} from "./components/TaskWithRedux";
+import {AppDispatch} from "./store/store";
+import {getTasksTC} from "./store/tasks-reducer";
 
 
 export type TodolistProps = {
@@ -34,11 +36,16 @@ export type FilterButtonType = 'All' | 'Active' | 'Completed'
 
 export const Todolist = React.memo((props: TodolistProps) => {
     console.log('todo')
+    const dispatch = AppDispatch()
+    useEffect(() => {
+        dispatch(getTasksTC(props.todoListId))
+    }, [])
 
     const tsarChangeFilter = useCallback((filterValue: FilterButtonType) =>
         () => props.changeTodoListFilter(filterValue, props.todoListId), [props.changeTodoListFilter, props.todoListId])
 
     let tasks = props.tasks
+
     if (props.filter === 'Active') {
         tasks = tasks.filter(t => !t.isDone);
     }
@@ -153,20 +160,37 @@ const ButtonWithMemo = React.memo((props: ButtonWithMemoPropsType) => {
     )
 })
 
-{/*<Button*/}
-{/*    color={props.filter === 'All' ? "secondary" : 'primary'}*/}
-{/*    style={{marginRight: '5px'}}*/}
-{/*    // className={props.filter === 'All' ? styles.activeFilter : ''}*/}
-{/*    onClick={tsarChangeFilter('All')}*/}
-{/*>All</Button>*/}
-{/*<Button*/}
-{/*    color={props.filter === 'Active' ? "secondary" : 'primary'}*/}
-{/*    style={{marginRight: '5px'}}*/}
-{/*    // className={props.filter === 'Active' ? styles.activeFilter : ''}*/}
-{/*    onClick={tsarChangeFilter('Active')}*/}
-{/*>Active</Button>*/}
-{/*<Button*/}
-{/*    color={props.filter === 'Completed' ? "secondary" : 'primary'}*/}
-{/*    // className={props.filter === 'Completed' ? styles.activeFilter : ''}*/}
-{/*    onClick={tsarChangeFilter('Completed')}*/}
-{/*>Completed</Button>*/}
+{/*<Button*/
+}
+{/*    color={props.filter === 'All' ? "secondary" : 'primary'}*/
+}
+{/*    style={{marginRight: '5px'}}*/
+}
+{/*    // className={props.filter === 'All' ? styles.activeFilter : ''}*/
+}
+{/*    onClick={tsarChangeFilter('All')}*/
+}
+{/*>All</Button>*/
+}
+{/*<Button*/
+}
+{/*    color={props.filter === 'Active' ? "secondary" : 'primary'}*/
+}
+{/*    style={{marginRight: '5px'}}*/
+}
+{/*    // className={props.filter === 'Active' ? styles.activeFilter : ''}*/
+}
+{/*    onClick={tsarChangeFilter('Active')}*/
+}
+{/*>Active</Button>*/
+}
+{/*<Button*/
+}
+{/*    color={props.filter === 'Completed' ? "secondary" : 'primary'}*/
+}
+{/*    // className={props.filter === 'Completed' ? styles.activeFilter : ''}*/
+}
+{/*    onClick={tsarChangeFilter('Completed')}*/
+}
+{/*>Completed</Button>*/
+}
