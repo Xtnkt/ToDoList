@@ -103,7 +103,7 @@ export const UpdateTaskTitle = () => {
     useEffect(() => {
         const todolistId = "9893b1a9-d2aa-443e-a5df-8541f4bca764"
         const taskId = "a7222675-2e8f-442d-bea8-e8cba0251238"
-        todolistAPI.updateTaskTitle(todolistId, taskId, {
+        todolistAPI.updateTask(todolistId, taskId, {
                 title: '4 name',
                 description: 'Desc',
                 completed: false,

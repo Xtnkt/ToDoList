@@ -1,15 +1,16 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox} from "@material-ui/core";
 import DoneIcon from '@material-ui/icons/Done';
+import {TaskStatuses} from "../api/todolist-api";
 
 type CheckBoxType = {
     checked: boolean,
-    callBack: (isDone: boolean) => void
+    callBack: (status:TaskStatuses) => void
 }
 
 export const CheckBox = memo((props: CheckBoxType) => {
     const onChangeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        props.callBack(event.currentTarget.checked)
+        props.callBack(event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
     },[props.callBack])
     return (
         <Checkbox

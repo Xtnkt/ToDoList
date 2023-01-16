@@ -1,38 +1,45 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {IconButton, ListItem} from "@material-ui/core";
 import styles from "../TodoList.module.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
-import {TaskType} from "../Todolist";
+import {ResponseTasksType, TaskStatuses} from "../api/todolist-api";
 
 export type TaskPropsType = {
-    task:TaskType,
-    removeTask: (taskId: string) => void,
-    changeTuskTitle: (taskId: string, title: string) => void,
-    changeIsDone: (id: string, newIsDone: boolean) => void,
+    task: ResponseTasksType,
+    todoId: string
+    removeTask: (taskId: string, todoListId: string) => void,
+    changeTuskTitle: (taskId: string, title: string, todoListId: string) => void,
+    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses) => void,
 }
 
-export const Task = memo(({task,removeTask,changeTuskTitle,changeIsDone}:TaskPropsType) => {
+export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTaskStatus}: TaskPropsType) => {
 
-    const changeTuskTitleHandler = (title: string) => {
-        changeTuskTitle(task.id, title)
-    }
-    const removeTaskHandler = () => {
-        removeTask(task.id)
-    }
-    const changeIsDoneHandler = (tId: string, isDone: boolean) => {
-        changeIsDone(tId, isDone)
-    }
+    const removeTaskHandler = useCallback(() => {
+        removeTask(task.id, todoId)
+    }, [task.id, todoId]);
+    const changeTuskTitleHandler = useCallback((newTitle: string) => {
+        changeTuskTitle(task.id, newTitle, todoId)
+    }, [task.id, todoId]);
+
+    const changeIsDoneHandler = useCallback((status: TaskStatuses) => {
+        changeTaskStatus(todoId, task.id, status )
+    }, [task.id, todoId]);
+
+
+    // const changeIsDoneHandler = (tId: string, isDone: boolean) => {
+    //     changeIsDone(tId, isDone)
+    // }
     return (
         <ListItem key={task.id}
-                  className={task.isDone ? styles.isDone : ''}
+                  className={task.status === TaskStatuses.Completed ? styles.isDone : ''}
                   style={{padding: '0px'}}>
             <IconButton aria-label="delete" color="default" onClick={removeTaskHandler} size={'small'}>
                 <DeleteIcon/>
             </IconButton>
-            <CheckBox checked={task.isDone}
-                      callBack={(isDone) => changeIsDoneHandler(task.id, isDone)}
+            <CheckBox checked={task.status === TaskStatuses.Completed}
+                      callBack={(status) => changeIsDoneHandler(status)}
             />
             <EditableSpan title={task.title} changeTitle={changeTuskTitleHandler}/>
         </ListItem>

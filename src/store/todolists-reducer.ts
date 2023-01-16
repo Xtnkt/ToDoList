@@ -1,4 +1,3 @@
-import {FilterButtonType} from "../Todolist";
 import {v1} from "uuid";
 import {ResponseTodoListType, todolistAPI} from "../api/todolist-api";
 import {TodoListType} from "../App";
@@ -24,7 +23,14 @@ type ChangeTodoListTitleAT = {
     todoListId: string
 }
 export type SeTodoListsAT = ReturnType<typeof SeTodoListsAC>
-type ActionType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListFilterAT | ChangeTodoListTitleAT | SeTodoListsAT
+
+type ActionType = RemoveTodoListAT | AddTodoListAT
+    | ChangeTodoListFilterAT | ChangeTodoListTitleAT | SeTodoListsAT
+
+export type FilterButtonType = 'All' | 'Active' | 'Completed'
+export type TodolistDomainType = ResponseTodoListType &{
+    filter: FilterButtonType
+}
 
 export const RemoveTodoListAC = (id: string): RemoveTodoListAT =>
     ({type: "REMOVE-TODOLIST", todoListId: id})
@@ -42,20 +48,22 @@ export const SeTodoListsAC = (todos: ResponseTodoListType[]) => {
     return {type: 'SET-TODOS', todos} as const
 }
 
-const initialState: Array<TodoListType> = []
+const initialState: Array<TodolistDomainType> = []
 
-export const todolistsReducer = (todolists = initialState, action: ActionType): Array<TodoListType> => {
+export const todolistsReducer = (todolists = initialState, action: ActionType): Array<TodolistDomainType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST":
             return todolists.filter(tl => tl.id !== action.todoListId)
         case "ADD-TODOLIST" :
             // const newTodoListId: string = v1();
-            const newTodoList: TodoListType = {
+            const newTodoList: TodolistDomainType = {
                 id: action.todoListId,
                 title: action.title,
                 filter: 'All',
+                addedDate:'',
+                order:0
             }
-            return [...todolists, newTodoList]
+            return [newTodoList, ...todolists]
         case "CHANGE-TODOLIST-FILTER":
             return todolists.map(tl => tl.id === action.todoListId ? {...tl, filter: action.filter} : tl)
         case "CHANGE-TODOLIST-TITLE":
