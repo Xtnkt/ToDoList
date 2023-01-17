@@ -11,7 +11,7 @@ export type TaskPropsType = {
     todoId: string
     removeTask: (taskId: string, todoListId: string) => void,
     changeTuskTitle: (taskId: string, title: string, todoListId: string) => void,
-    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses) => void,
+    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses ) => void,
 }
 
 export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTaskStatus}: TaskPropsType) => {
@@ -23,7 +23,7 @@ export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTask
         changeTuskTitle(task.id, newTitle, todoId)
     }, [task.id, todoId]);
 
-    const changeIsDoneHandler = useCallback((status: TaskStatuses) => {
+    const changeTaskStatusHandler = useCallback((status: TaskStatuses) => {
         changeTaskStatus(todoId, task.id, status )
     }, [task.id, todoId]);
 
@@ -39,7 +39,7 @@ export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTask
                 <DeleteIcon/>
             </IconButton>
             <CheckBox checked={task.status === TaskStatuses.Completed}
-                      callBack={(status) => changeIsDoneHandler(status)}
+                      callBack={(status) => changeTaskStatusHandler(status)}
             />
             <EditableSpan title={task.title} changeTitle={changeTuskTitleHandler}/>
         </ListItem>

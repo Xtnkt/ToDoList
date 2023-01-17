@@ -29,7 +29,7 @@ export type ResponseTasksType = {
     order: number
     addedDate: string,
 }
-type UpdateTaskType = {
+export type UpdateTaskType = {
     title: string,
     description: string,
     completed: boolean,
