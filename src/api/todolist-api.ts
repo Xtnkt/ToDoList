@@ -1,11 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 
-export type ResponseTodoListType = {
-    id: string,
-    title: string,
-    addedDate: string,
-    order: number
-}
+
 type ResponseType<T = {}> = {
     data: T,
     fieldsErrors: string[],
@@ -16,6 +11,13 @@ type GetTasksResponse = {
     items: ResponseTasksType[],
     totalCount: number,
     error: string
+}
+
+export type ResponseTodoListType = {
+    id: string,
+    title: string,
+    addedDate: string,
+    order: number
 }
 export type ResponseTasksType = {
     description: string,

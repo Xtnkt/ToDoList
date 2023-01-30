@@ -1,9 +1,8 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
 import Task from "../components/Task";
 import {TaskWithRedux} from "../components/TaskWithRedux";
-import {action} from "@storybook/addon-actions";
 import {ReduxStoreProviderDecorator} from "../store/ReduxStoreProviderDecorator";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -12,10 +11,14 @@ export default {
     component: TaskWithRedux,
     // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
     args: {
-        task: {id: 'dq', title: 'dqw', isDone: true},
+        task: {
+            id: 'dq', title: 'dqw', description: '',
+            status: 0, priority: 0, startDate: '', deadline: '',
+            todoListId: '', order: 0, addedDate: ''
+        },
         todolistID: 'dqw'
     },
-    decorators:[ReduxStoreProviderDecorator]
+    decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof Task>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -27,7 +30,11 @@ export const TaskIsDoneStory = Template.bind({});
 export const TaskIsNotDoneStory = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 TaskIsNotDoneStory.args = {
-    task: {id: 'dq', title: 'dqw', isDone: false},
+    task: {
+        id: 'dq', title: 'dqw', description: '',
+        status: 0, priority: 0, startDate: '', deadline: '',
+        todoListId: '', order: 0, addedDate: ''
+    },
 };
 
 

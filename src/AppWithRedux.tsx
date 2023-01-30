@@ -24,6 +24,7 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
+
     useEffect(() => {
         dispatch(getTodoTC())
     }, [])

@@ -1,6 +1,5 @@
 import {v1} from "uuid";
 import {ResponseTodoListType, todolistAPI} from "../api/todolist-api";
-import {TodoListType} from "../App";
 import {Dispatch} from "redux";
 
 export type RemoveTodoListAT = {
