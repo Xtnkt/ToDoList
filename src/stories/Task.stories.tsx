@@ -1,19 +1,19 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import Task from "../components/Task";
-import {TaskWithRedux} from "../components/TaskWithRedux";
 import {ReduxStoreProviderDecorator} from "../store/ReduxStoreProviderDecorator";
+import {TaskStatuses} from "../api/todolist-api";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
     title: 'TODOLISTS/Task',
-    component: TaskWithRedux,
+    component: Task,
     // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
     args: {
         task: {
             id: 'dq', title: 'dqw', description: '',
-            status: 0, priority: 0, startDate: '', deadline: '',
+            status: TaskStatuses.Completed, priority: 0, startDate: '', deadline: '',
             todoListId: '', order: 0, addedDate: ''
         },
         todolistID: 'dqw'
@@ -22,7 +22,7 @@ export default {
 } as ComponentMeta<typeof Task>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux {...args} />;
+const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
 export const TaskIsDoneStory = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
@@ -32,7 +32,7 @@ export const TaskIsNotDoneStory = Template.bind({});
 TaskIsNotDoneStory.args = {
     task: {
         id: 'dq', title: 'dqw', description: '',
-        status: 0, priority: 0, startDate: '', deadline: '',
+        status: TaskStatuses.New, priority: 0, startDate: '', deadline: '',
         todoListId: '', order: 0, addedDate: ''
     },
 };

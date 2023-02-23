@@ -16,9 +16,9 @@ export type TodolistProps = {
     filter: FilterButtonType,
     tasks: ResponseTasksType[],
 
-    addTask: (todoListId: string, newTitle: string ) => void,
+    addTask: (todoListId: string, newTitle: string) => void,
     removeTask: (taskId: string, todoListId: string) => void,
-    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses ) => void,
+    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses) => void,
     changeTuskTitle: (taskId: string, title: string, todoListId: string) => void,
     removeTodoList: (todoListId: string) => void
     changeTodoListFilter: (filterValue: FilterButtonType, todoListId: string) => void,
@@ -59,9 +59,6 @@ export const Todolist = React.memo((props: TodolistProps) => {
     }, [props.changeTodoListTitle, props.todoListId]);
 
     const mapTasks = tasks.map((t) => {
-        // const changeTuskTitle = (title: string) => {
-        //     props.changeTuskTitle(t.id, title, props.todoListId)
-        // }
         return (
             <Task key={t.id}
                   task={t}
@@ -69,18 +66,6 @@ export const Todolist = React.memo((props: TodolistProps) => {
                   removeTask={props.removeTask}
                   changeTuskTitle={props.changeTuskTitle}
                   changeTaskStatus={props.changeTaskStatus}/>
-            // <TaskWithRedux key={t.id} task={t} todolistId={props.todoListId}/>
-            // <ListItem key={t.id}
-            //           className={t.isDone ? styles.isDone : ''}
-            //           style={{padding: '0px'}}>
-            //     <IconButton aria-label="delete" color="default" onClick={() => removeTaskHandler(t.id)} size={'small'}>
-            //         <DeleteIcon/>
-            //     </IconButton>
-            //     <CheckBox checked={t.isDone}
-            //               callBack={(isDone) => changeIsDoneHandler(t.id, isDone)}
-            //     />
-            //     <EditableSpan title={t.title} changeTitle={changeTuskTitle}/>
-            // </ListItem>
         )
     })
 
@@ -142,37 +127,3 @@ const ButtonWithMemo = React.memo((props: ButtonWithMemoPropsType) => {
     )
 })
 
-{/*<Button*/
-}
-{/*    color={props.filter === 'All' ? "secondary" : 'primary'}*/
-}
-{/*    style={{marginRight: '5px'}}*/
-}
-{/*    // className={props.filter === 'All' ? styles.activeFilter : ''}*/
-}
-{/*    onClick={tsarChangeFilter('All')}*/
-}
-{/*>All</Button>*/
-}
-{/*<Button*/
-}
-{/*    color={props.filter === 'Active' ? "secondary" : 'primary'}*/
-}
-{/*    style={{marginRight: '5px'}}*/
-}
-{/*    // className={props.filter === 'Active' ? styles.activeFilter : ''}*/
-}
-{/*    onClick={tsarChangeFilter('Active')}*/
-}
-{/*>Active</Button>*/
-}
-{/*<Button*/
-}
-{/*    color={props.filter === 'Completed' ? "secondary" : 'primary'}*/
-}
-{/*    // className={props.filter === 'Completed' ? styles.activeFilter : ''}*/
-}
-{/*    onClick={tsarChangeFilter('Completed')}*/
-}
-{/*>Completed</Button>*/
-}

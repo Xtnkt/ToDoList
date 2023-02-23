@@ -111,7 +111,7 @@ function AppWithReducer() {
         dispatchToTasks(action)
     }
     //Create:
-    const addTodoList = (title: string) => {
+    const addTodoList = (title: any) => {
         let action = AddTodoListAC(title) // !!!
         dispatchToTodoLists(action)
         dispatchToTasks(action)

@@ -42,6 +42,10 @@ const initialGlobalState = {
                 todoListId: '', order: 0, addedDate: ''
             }
         ]
+    },
+    app:{
+        status: 'loading',
+        error:null
     }
 }
 
