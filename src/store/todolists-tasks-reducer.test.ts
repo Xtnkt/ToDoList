@@ -10,7 +10,7 @@ test('ids should be equals', () => {
         id: 'string',
         title: 'string',
         addedDate: 'string',
-        order: 0
+        order: 0,
     }
     const action = AddTodoListAC(newTodo)
 

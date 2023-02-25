@@ -3,8 +3,9 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import {AddItemForm} from "../components/AddItemForm";
 import {action} from "@storybook/addon-actions";
-import {IconButton, TextField} from "@material-ui/core";
-import {AddBoxRounded} from "@material-ui/icons";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import AddBoxRounded from "@mui/icons-material/AddBoxRounded";
 import styles from "../TodoList.module.css";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

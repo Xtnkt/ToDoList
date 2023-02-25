@@ -1,7 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import styles from "../TodoList.module.css";
-import {IconButton, TextField} from "@material-ui/core";
-import {AddBoxRounded} from "@material-ui/icons";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import AddBoxRounded from "@mui/icons-material/AddBoxRounded";
 
 
 type AddItemFormPropsType = {

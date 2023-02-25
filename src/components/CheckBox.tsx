@@ -1,6 +1,6 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
-import {Checkbox} from "@material-ui/core";
-import DoneIcon from '@material-ui/icons/Done';
+import Checkbox from "@mui/material/Checkbox";
+import DoneIcon from '@mui/icons-material/Done';
 import {TaskStatuses} from "../api/todolist-api";
 
 type CheckBoxType = {

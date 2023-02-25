@@ -15,16 +15,17 @@ import {
 import {AppDispatch, useAppSelector} from "./store/store";
 import {ResponseTasksType, TaskStatuses} from "./api/todolist-api";
 
-import Typography from "@material-ui/core/Typography";
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import Toolbar from '@material-ui/core/Toolbar';
-import {Menu} from "@material-ui/icons";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@mui/material/Typography";
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material//Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Toolbar from '@mui/material/Toolbar';
+import Menu from "@mui/icons-material/Menu";
+import LinearProgress from "@mui/material/LinearProgress";
+import {ErrorSnackbar} from "./components/ErrorSnackbar";
 
 
 export type TasksStateType = {
@@ -41,7 +42,6 @@ function AppWithRedux() {
     const tasks = useAppSelector<TasksStateType>((state) => state.tasks)
     const status = useAppSelector(state => state.app.status)
     const dispatch = AppDispatch()
-
     //BLL
 
     //Tasks
@@ -90,6 +90,7 @@ function AppWithRedux() {
                         title={tl.title}
                         filter={tl.filter}
                         tasks={tasks[tl.id]}
+                        entityStatus={tl.entityStatus}
 
                         addTask={addTask}
                         removeTask={removeTask}
@@ -131,6 +132,7 @@ function AppWithRedux() {
                     {todoListComponents}
                 </Grid>
             </Container>
+            <ErrorSnackbar/>
         </div>
     );
 }

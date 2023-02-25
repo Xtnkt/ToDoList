@@ -1,7 +1,8 @@
 import React, {memo, useCallback} from 'react';
-import {IconButton, ListItem} from "@material-ui/core";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
 import styles from "../TodoList.module.css";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
 import {ResponseTasksType, TaskStatuses} from "../api/todolist-api";
@@ -11,7 +12,7 @@ export type TaskPropsType = {
     todoId: string
     removeTask: (taskId: string, todoListId: string) => void,
     changeTuskTitle: (taskId: string, title: string, todoListId: string) => void,
-    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses ) => void,
+    changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses) => void,
 }
 
 export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTaskStatus}: TaskPropsType) => {
@@ -24,7 +25,7 @@ export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTask
     }, [task.id, todoId]);
 
     const changeTaskStatusHandler = useCallback((status: TaskStatuses) => {
-        changeTaskStatus(todoId, task.id, status )
+        changeTaskStatus(todoId, task.id, status)
     }, [task.id, todoId]);
 
 

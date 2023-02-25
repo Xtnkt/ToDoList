@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from "axios";
 
-
 type ResponseType<T = {}> = {
     data: T,
     fieldsErrors: string[],
@@ -40,7 +39,6 @@ export type UpdateTaskType = {
     startDate: string,
     deadline: string,
 }
-
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
@@ -48,12 +46,16 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
-
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3,
+}
+export enum ResultCode {
+    SUCCEEDED = 0,
+    FAILED = 1,
+    CAPTCHA = 10
 }
 
 const instance = axios.create({
@@ -82,7 +84,6 @@ export const todolistAPI = {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
             .then((res) => res.data)
     },
-
 
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)

@@ -1,6 +1,10 @@
 import React, {FC} from 'react';
-import {Button, ButtonGroup, IconButton, List, ListItem} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import DeleteIcon from "@mui/icons-material/Delete";
 import {CheckBox} from "./components/CheckBox";
 import {EditableSpan} from "./components/EditableSpan";
 import {AddItemForm} from "./components/AddItemForm";

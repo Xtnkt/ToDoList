@@ -1,8 +1,7 @@
 import React, {memo} from 'react';
-import {IconButton, ListItem} from "@material-ui/core";
-import styles from "../TodoList.module.css";
-import DeleteIcon from "@material-ui/icons/Delete";
-import {CheckBox} from "./CheckBox";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {EditableSpan} from "./EditableSpan";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../store/tasks-reducer";

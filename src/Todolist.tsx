@@ -1,13 +1,17 @@
 import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {Button, ButtonGroup, IconButton, List} from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
 import Task from "./components/Task";
 import {AppDispatch} from "./store/store";
 import {getTasksTC} from "./store/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "./api/todolist-api";
 import {FilterButtonType} from "./store/todolists-reducer";
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import DeleteIcon from "@mui/icons-material/Delete";
+import {RequestStatusType} from "./store/app-reducer";
 
 
 export type TodolistProps = {
@@ -15,6 +19,7 @@ export type TodolistProps = {
     title: string,
     filter: FilterButtonType,
     tasks: ResponseTasksType[],
+    entityStatus: RequestStatusType,
 
     addTask: (todoListId: string, newTitle: string) => void,
     removeTask: (taskId: string, todoListId: string) => void,
@@ -73,7 +78,8 @@ export const Todolist = React.memo((props: TodolistProps) => {
         <div>
             <h3 style={{marginTop: '0px'}}>
                 <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
-                <IconButton aria-label="delete" color="default" onClick={removeTodoListHandler} size={'small'}>
+                <IconButton disabled={props.entityStatus === 'loading'} aria-label="delete" color="default"
+                            onClick={removeTodoListHandler} size={'small'}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>
@@ -108,7 +114,7 @@ export const Todolist = React.memo((props: TodolistProps) => {
 })
 
 type ButtonWithMemoPropsType = {
-    color: 'inherit' | 'primary' | 'secondary' | 'default',
+    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning',
     onClick: () => void,
     title: string
 }

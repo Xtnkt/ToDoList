@@ -3,8 +3,15 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
+import Typography from "@mui/material/Typography";
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material//Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Toolbar from '@mui/material/Toolbar';
+import Menu from "@mui/icons-material/Menu";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
@@ -30,8 +37,8 @@ function AppWithReducer() {
     const todoListId_1 = v1()
     const todoListId_2 = v1()
     const [todoLists, dispatchToTodoLists] = useReducer(todolistsReducer, [
-        {id: todoListId_1, title: "What to learn", filter: 'All', addedDate: '', order: 0},
-        {id: todoListId_2, title: "What to buy", filter: 'All', addedDate: '', order: 0},
+        {id: todoListId_1, title: "What to learn", filter: 'All', addedDate: '', order: 0, entityStatus:"idle"},
+        {id: todoListId_2, title: "What to buy", filter: 'All', addedDate: '', order: 0, entityStatus:"idle"},
     ])
     const [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todoListId_1]: [
@@ -150,6 +157,7 @@ function AppWithReducer() {
                         title={tl.title}
                         filter={tl.filter}
                         tasks={filteredTasks}
+                        entityStatus={tl.entityStatus}
 
                         addTask={addTask}
                         removeTask={removeTask}
