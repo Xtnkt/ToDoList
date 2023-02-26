@@ -6,7 +6,8 @@ import AddBoxRounded from "@mui/icons-material/AddBoxRounded";
 
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void,
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
@@ -42,8 +43,9 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        onKeyDown={onKeyPressHandler}
                        onChange={onChangeHandler}
                        error={!!error}
+                       disabled={props.disabled}
             />
-            <IconButton color={"primary"} size={'medium'} onClick={() => addItemHandler()}>
+            <IconButton color={"primary"} size={'medium'} onClick={addItemHandler} disabled={props.disabled}>
                 <AddBoxRounded/>
             </IconButton>
             {error && <div className={styles.errorMessage}>{error}</div>}

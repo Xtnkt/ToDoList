@@ -6,16 +6,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
 import {ResponseTasksType, TaskStatuses} from "../api/todolist-api";
+import {RequestStatusType} from "../store/app-reducer";
 
 export type TaskPropsType = {
     task: ResponseTasksType,
-    todoId: string
+    todoId: string,
+    entityStatus: RequestStatusType,
     removeTask: (taskId: string, todoListId: string) => void,
     changeTuskTitle: (taskId: string, title: string, todoListId: string) => void,
     changeTaskStatus: (todoListId: string, taskId: string, status: TaskStatuses) => void,
 }
 
-export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTaskStatus}: TaskPropsType) => {
+export const Task = memo(({
+                              task,
+                              todoId,
+                              removeTask,
+                              changeTuskTitle,
+                              changeTaskStatus,
+                              entityStatus
+                          }: TaskPropsType) => {
 
     const removeTaskHandler = useCallback(() => {
         removeTask(task.id, todoId)
@@ -28,19 +37,17 @@ export const Task = memo(({task, todoId, removeTask, changeTuskTitle, changeTask
         changeTaskStatus(todoId, task.id, status)
     }, [task.id, todoId]);
 
-
-    // const changeIsDoneHandler = (tId: string, isDone: boolean) => {
-    //     changeIsDone(tId, isDone)
-    // }
     return (
         <ListItem key={task.id}
                   className={task.status === TaskStatuses.Completed ? styles.isDone : ''}
                   style={{padding: '0px'}}>
-            <IconButton aria-label="delete" color="default" onClick={removeTaskHandler} size={'small'}>
+            <IconButton disabled={entityStatus === 'loading'} aria-label="delete" color="default"
+                        onClick={removeTaskHandler} size={'small'}>
                 <DeleteIcon/>
             </IconButton>
             <CheckBox checked={task.status === TaskStatuses.Completed}
                       callBack={(status) => changeTaskStatusHandler(status)}
+                      disabled={entityStatus === 'loading'}
             />
             <EditableSpan title={task.title} changeTitle={changeTuskTitleHandler}/>
         </ListItem>
