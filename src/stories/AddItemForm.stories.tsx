@@ -6,7 +6,7 @@ import {action} from "@storybook/addon-actions";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import AddBoxRounded from "@mui/icons-material/AddBoxRounded";
-import styles from "../TodoList.module.css";
+import styles from "../features/Todolist/TodoList.module.css";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

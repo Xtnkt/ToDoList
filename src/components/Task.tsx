@@ -1,7 +1,7 @@
 import React, {memo, useCallback} from 'react';
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
-import styles from "../TodoList.module.css";
+import styles from "../features/Todolist/TodoList.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";

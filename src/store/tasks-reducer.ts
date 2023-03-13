@@ -1,11 +1,11 @@
 import {AddTodoListAT, RemoveTodoListAT, SeEntityStatusAC, SeEntityStatusAT, SeTodoListsAT} from "./todolists-reducer";
 import {ResponseTasksType, ResultCode, TaskStatuses, todolistAPI, UpdateTaskType} from "../api/todolist-api";
 import {Dispatch} from "redux";
-import {TasksStateType} from "../AppWithRedux";
 import {AppRootStateType} from "./store";
 import {SetErrorAT, setLoadingStatusAC, SetLoadingStatusAT} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import axios from "axios";
+import {TasksStateType} from "../features/Todolist/TodolistsList";
 
 type RemoveTaskAT = ReturnType<typeof removeTaskAC>
 type AddTaskAT = ReturnType<typeof addTaskAC>
