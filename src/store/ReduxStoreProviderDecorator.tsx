@@ -49,7 +49,8 @@ const initialGlobalState = {
     },
     auth:{
         isLoggedIn: false,
-        isInitialised: false
+        isInitialised: false,
+        nickname: ''
     }
 }
 

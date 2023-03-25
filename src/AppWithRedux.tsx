@@ -23,6 +23,7 @@ function AppWithRedux() {
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
     const isInitialised = useAppSelector<boolean>(state => state.auth.isInitialised)
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+    const nickname = useAppSelector<string | null>(state => state.auth.nickname)
 
     const logOutHandler = () => {
         dispatch(logOutTC())
@@ -48,8 +49,14 @@ function AppWithRedux() {
                     <Typography variant="h6">
                         TodoLists
                     </Typography>
-                    {isLoggedIn &&
-                        <Button color="inherit" variant={"outlined"} onClick={logOutHandler}>Log out</Button>}
+                    <div>
+                        {isLoggedIn &&
+                            <Button color="inherit" variant={"outlined"}>{nickname}</Button>
+                        }
+                        {isLoggedIn &&
+                            <Button color="inherit" variant={"outlined"} onClick={logOutHandler}>Log out</Button>
+                        }
+                    </div>
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress color="secondary"/>}
