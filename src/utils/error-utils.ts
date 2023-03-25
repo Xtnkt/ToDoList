@@ -5,7 +5,7 @@ import {ResponseType} from "../api/todolist-api";
 type ErrorUtilsDispatchType = Dispatch<AppActionsType>
 
 export const handleServerNetworkError = (dispatch: ErrorUtilsDispatchType, error: { message: string }) => {
-    dispatch(setErrorAC(error.message))
+    dispatch(setErrorAC(error.message ? error.message : 'Some error'))
     dispatch(setLoadingStatusAC('failed'))
 }
 export const handleServerAppError = <T>(dispatch: ErrorUtilsDispatchType, data: ResponseType<T>) => {

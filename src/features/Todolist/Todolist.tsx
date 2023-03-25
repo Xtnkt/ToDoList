@@ -42,7 +42,6 @@ export const Todolist = React.memo((props: TodolistProps) => {
         () => props.changeTodoListFilter(filterValue, props.todoListId), [props.changeTodoListFilter, props.todoListId])
 
     let tasks = props.tasks
-
     if (props.filter === 'Active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New);
     }

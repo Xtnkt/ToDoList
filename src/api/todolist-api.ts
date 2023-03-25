@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {FormDataType} from "../features/Login/Login";
 
 export type ResponseType<T = {}> = {
     data: T,
@@ -70,6 +71,21 @@ const instance = axios.create({
     },
 })
 
+export const authAPI = {
+    login(data: FormDataType) {
+        return instance.post<ResponseType<{ userId: number }>>('auth/login', data)
+            .then((res) => res.data)
+    },
+    me(){
+        return instance.get<ResponseType<{ userId: number }>>('auth/me')
+            .then((res) => res.data)
+    },
+    logOut(){
+        return instance.delete<ResponseType>('auth/login')
+            .then((res) => res.data)
+    }
+}
+
 export const todolistAPI = {
     getTodoLists() {
         return instance.get<ResponseTodoListType[]>('todo-lists')
@@ -104,3 +120,4 @@ export const todolistAPI = {
             .then((res) => res.data)
     }
 }
+

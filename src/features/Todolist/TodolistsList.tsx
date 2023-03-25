@@ -15,22 +15,24 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "../../components/AddItemForm";
+import {Navigate} from "react-router-dom";
 
 export type TasksStateType = {
     [todoListId: string]: ResponseTasksType[],
 }
 
 export const TodoListsList: React.FC = () => {
-
-    useEffect(() => {
-        dispatch(getTodoTC())
-    }, [])
     //BLL
     const todoLists = useAppSelector<Array<TodolistDomainType>>(todolistsSelector)
     const tasks = useAppSelector<TasksStateType>(tasksSelector)
+    const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
     const dispatch = AppDispatch()
     //BLL
-
+    useEffect(() => {
+        if (isLoggedIn) {
+            dispatch(getTodoTC())
+        }
+    }, [])
     //Tasks
     //Delete:
     const removeTask = useCallback((taskId: string, todoListId: string) => {
@@ -48,7 +50,6 @@ export const TodoListsList: React.FC = () => {
         let action = changeTaskTitleAC(taskId, title, todoListId)
         dispatch(action)
     }, [])
-
     //TodoLists
     //Delete:
     const removeTodoList = useCallback((todoListId: string) => {
@@ -91,6 +92,11 @@ export const TodoListsList: React.FC = () => {
             </Grid>
         )
     })
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
+
     return (
         <>
             <Grid container style={{padding: '20px 0'}}>

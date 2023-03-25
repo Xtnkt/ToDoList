@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {useAppSelector} from "./store/store";
+import {AppDispatch, useAppSelector} from "./store/store";
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -14,9 +14,30 @@ import {TodoListsList} from "./features/Todolist/TodolistsList";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 import {Error404} from "./components/ErrorPage/Error404";
+import {logOutTC, meTC} from "./store/auth-reducer";
+import {RequestStatusType} from "./store/app-reducer";
+import {CircularProgress} from "@mui/material";
 
 function AppWithRedux() {
-    const status = useAppSelector(state => state.app.status)
+    const dispatch = AppDispatch()
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialised = useAppSelector<boolean>(state => state.auth.isInitialised)
+    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
+    const logOutHandler = () => {
+        dispatch(logOutTC())
+    }
+
+    useEffect(() => {
+        dispatch(meTC())
+    }, [])
+
+    if (!isInitialised) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
     return (
         <div className="App">
             <AppBar position="static">
@@ -27,7 +48,8 @@ function AppWithRedux() {
                     <Typography variant="h6">
                         TodoLists
                     </Typography>
-                    <Button color="inherit" variant={"outlined"}>Login</Button>
+                    {isLoggedIn &&
+                        <Button color="inherit" variant={"outlined"} onClick={logOutHandler}>Log out</Button>}
                 </Toolbar>
             </AppBar>
             {status === 'loading' && <LinearProgress color="secondary"/>}

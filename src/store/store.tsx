@@ -4,6 +4,7 @@ import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore
 import thunk, {ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "./app-reducer";
+import {authReducer} from "./auth-reducer";
 
 declare global {
     interface Window {
@@ -16,7 +17,8 @@ declare global {
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 // непосредственно создаём store
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
