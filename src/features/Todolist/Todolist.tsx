@@ -1,17 +1,17 @@
 import React, {useCallback, useEffect} from "react";
-import {AddItemForm} from "../../components/AddItemForm";
-import {EditableSpan} from "../../components/EditableSpan";
-import Task from "../../components/Task";
-import {AppDispatch} from "../../store/store";
-import {getTasksTC} from "../../store/tasks-reducer";
-import {ResponseTasksType, TaskStatuses} from "../../api/todolist-api";
-import {FilterButtonType} from "../../store/todolists-reducer";
+import {AddItemForm} from "components/AddItemForm";
+import {EditableSpan} from "components/EditableSpan";
+import {Task} from "components/Task";
+import {AppDispatch} from "store/store";
+import {getTasksTC} from "store/tasks-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
+import {FilterButtonType} from "store/todolists-reducer";
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import DeleteIcon from "@mui/icons-material/Delete";
-import {RequestStatusType} from "../../store/app-reducer";
+import {RequestStatusType} from "store/app-reducer";
 
 export type TodolistProps = {
     todoListId: string
@@ -30,7 +30,6 @@ export type TodolistProps = {
 }
 
 export const Todolist = React.memo((props: TodolistProps) => {
-    console.log('todo')
 
     const dispatch = AppDispatch()
 

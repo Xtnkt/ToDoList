@@ -2,8 +2,8 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import Task from "../components/Task";
-import {ReduxStoreProviderDecorator} from "../store/ReduxStoreProviderDecorator";
-import {TaskStatuses} from "../api/todolist-api";
+import {ReduxStoreProviderDecorator} from "store/ReduxStoreProviderDecorator";
+import {TaskStatuses} from "api/todolist-api";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

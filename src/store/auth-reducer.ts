@@ -1,8 +1,10 @@
 import {Dispatch} from 'redux'
-import {authAPI, ResultCode} from "../api/todolist-api";
-import {FormDataType} from "../features/Login/Login";
+import {authAPI, ResultCode} from "api/todolist-api";
+import {FormDataType} from "features/Login/Login";
 import {AppActionsType, setLoadingStatusAC} from "./app-reducer";
-import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AppThunk} from "store/store";
 
 const initialState: InitialStateType = {
     isLoggedIn: false,
@@ -15,33 +17,31 @@ type InitialStateType = {
     nickname: null | string
 }
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
-            return {...state, isLoggedIn: action.value}
-        case 'login/SET-IS-INITIALISED':
-            return {...state, isInitialised: action.value}
-        case 'login/SET-IS-NICKNAME':
-            return {...state, nickname: action.nickname}
-        default:
-            return state
+const slice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+        setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        },
+        setIsInitialised: (state, action: PayloadAction<{ isInitialised: boolean }>) => {
+            state.isInitialised = action.payload.isInitialised
+        },
+        setNickname: (state, action: PayloadAction<{ nickname: string | null }>) => {
+            state.nickname = action.payload.nickname
+        }
     }
-}
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({type: 'login/SET-IS-LOGGED-IN', value} as const)
-export const setIsInitialisedAC = (value: boolean) =>
-    ({type: 'login/SET-IS-INITIALISED', value} as const)
-export const setNicknamedAC = (nickname: string | null) =>
-    ({type: 'login/SET-IS-NICKNAME', nickname} as const)
+})
+export const authReducer = slice.reducer
+export const authActions = slice.actions
 
 // thunks
-export const loginTC = (data: FormDataType) => async (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (data: FormDataType):AppThunk => async (dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     try {
         const result = await authAPI.login(data)
         if (result.resultCode === ResultCode.SUCCEEDED) {
-            dispatch(setIsLoggedInAC(true))
+            dispatch(authActions.setIsLoggedIn({isLoggedIn: true}))
         } else {
             handleServerAppError(dispatch, result)
         }
@@ -51,13 +51,13 @@ export const loginTC = (data: FormDataType) => async (dispatch: Dispatch<Actions
         dispatch(setLoadingStatusAC('succeeded'))
     }
 }
-export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const logOutTC = ():AppThunk => async (dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     try {
         const result = await authAPI.logOut()
         if (result.resultCode === ResultCode.SUCCEEDED) {
-            dispatch(setIsLoggedInAC(false))
-            dispatch(setNicknamedAC(null))
+            dispatch(authActions.setIsLoggedIn({isLoggedIn: false}))
+            dispatch(authActions.setNickname({nickname: null}))
         } else {
             handleServerAppError(dispatch, result)
         }
@@ -67,17 +67,16 @@ export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         dispatch(setLoadingStatusAC('succeeded'))
     }
 }
-export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const meTC = ():AppThunk => async (dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     try {
         const result = await authAPI.me()
-        console.log(result)
         if (result.resultCode === ResultCode.SUCCEEDED) {
-            dispatch(setIsLoggedInAC(true))
-            dispatch(setIsInitialisedAC(true))
-            dispatch(setNicknamedAC(result.data.login))
+            dispatch(authActions.setIsLoggedIn({isLoggedIn: true}))
+            dispatch(authActions.setIsInitialised({isInitialised: true}))
+            dispatch(authActions.setNickname({nickname: result.data.login}))
         } else {
-            dispatch(setIsInitialisedAC(true))
+            dispatch(authActions.setIsInitialised({isInitialised: true}))
             handleServerAppError(dispatch, result)
         }
     } catch (error: any) {
@@ -87,9 +86,30 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
     }
 
 }
-
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC>
-    | ReturnType<typeof setIsInitialisedAC>
-    | ReturnType<typeof setNicknamedAC>
+type ActionsType = ReturnType<typeof authActions.setIsLoggedIn>
+    | ReturnType<typeof authActions.setIsInitialised>
+    | ReturnType<typeof authActions.setNickname>
     | AppActionsType
+
+//
+//
+// const _authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+//     switch (action.type) {
+//         case 'login/SET-IS-LOGGED-IN':
+//             return {...state, isLoggedIn: action.value}
+//         case 'login/SET-IS-INITIALISED':
+//             return {...state, isInitialised: action.value}
+//         case 'login/SET-IS-NICKNAME':
+//             return {...state, nickname: action.nickname}
+//         default:
+//             return state
+//     }
+// }
+// // actions
+// export const setIsLoggedInAC = (value: boolean) =>
+//     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+// export const setIsInitialisedAC = (value: boolean) =>
+//     ({type: 'login/SET-IS-INITIALISED', value} as const)
+// export const setNicknameAC = (nickname: string | null) =>
+//     ({type: 'login/SET-IS-NICKNAME', nickname} as const)

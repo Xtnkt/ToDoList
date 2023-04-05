@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import './App.css';
-import {AppDispatch, useAppSelector} from "./store/store";
+import s from './App.module.css';
+import {AppDispatch, useAppSelector} from "store/store";
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -9,13 +9,13 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Menu from "@mui/icons-material/Menu";
 import LinearProgress from "@mui/material/LinearProgress";
-import {ErrorSnackbar} from "./components/ErrorSnackbar";
-import {TodoListsList} from "./features/Todolist/TodolistsList";
+import {ErrorSnackbar} from "components/ErrorSnackbar";
+import {TodoListsList} from "features/Todolist/TodolistsList";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "./features/Login/Login";
-import {Error404} from "./components/ErrorPage/Error404";
-import {logOutTC, meTC} from "./store/auth-reducer";
-import {RequestStatusType} from "./store/app-reducer";
+import {Login} from "features/Login/Login";
+import {Error404} from "components/ErrorPage/Error404";
+import {logOutTC, meTC} from "store/auth-reducer";
+import {RequestStatusType} from "store/app-reducer";
 import {CircularProgress} from "@mui/material";
 
 function AppWithRedux() {
@@ -59,7 +59,9 @@ function AppWithRedux() {
                     </div>
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress color="secondary"/>}
+            <div className={s.linerProgress}>
+                {status === 'loading' && <LinearProgress  color="secondary"/>}
+            </div>
             <Container fixed>
                 <Routes>
                     <Route path={'/ToDoList'} element={<TodoListsList/>}/>

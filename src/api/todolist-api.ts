@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {FormDataType} from "../features/Login/Login";
+import {FormDataType} from "features/Login/Login";
 
 export type ResponseType<T = {}> = {
     data: T,

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import './App.css';
-import {Todolist} from "./features/Todolist/Todolist";
+import './App.module.css';
+import {Todolist} from "features/Todolist/Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "components/AddItemForm";
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -12,9 +12,9 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import Menu from "@mui/icons-material/Menu";
-import {FilterButtonType} from "./store/todolists-reducer";
-import {ResponseTasksType, TaskStatuses} from "./api/todolist-api";
-import {RequestStatusType} from "./store/app-reducer";
+import {FilterButtonType} from "store/todolists-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
+import {RequestStatusType} from "store/app-reducer";
 
 export type TodoListType = {
     id: string,

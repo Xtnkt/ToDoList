@@ -4,8 +4,8 @@ import ListItem from "@mui/material/ListItem";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {EditableSpan} from "./EditableSpan";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../store/tasks-reducer";
-import {ResponseTasksType} from "../api/todolist-api";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "store/tasks-reducer";
+import {ResponseTasksType} from "api/todolist-api";
 
 export type TaskPropsType = {
     task: ResponseTasksType,

@@ -6,15 +6,15 @@ import {
     FilterButtonType,
     getTodoTC,
     TodolistDomainType
-} from "../../store/todolists-reducer";
-import {AppDispatch, useAppSelector} from "../../store/store";
-import {tasksSelector, todolistsSelector} from "../../store/selectors";
-import {addTasksTC, changeTaskTitleAC, removeTaskTC, updateTaskTC} from "../../store/tasks-reducer";
-import {ResponseTasksType, TaskStatuses} from "../../api/todolist-api";
+} from "store/todolists-reducer";
+import {AppDispatch, useAppSelector} from "store/store";
+import {tasksSelector, todolistsSelector} from "store/selectors";
+import {addTasksTC, changeTaskTitleAC, removeTaskTC, updateTaskTC} from "store/tasks-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist";
-import {AddItemForm} from "../../components/AddItemForm";
+import {AddItemForm} from "components/AddItemForm";
 import {Navigate} from "react-router-dom";
 
 export type TasksStateType = {

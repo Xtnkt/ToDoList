@@ -5,8 +5,8 @@ import styles from "../features/Todolist/TodoList.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {CheckBox} from "./CheckBox";
 import {EditableSpan} from "./EditableSpan";
-import {ResponseTasksType, TaskStatuses} from "../api/todolist-api";
-import {RequestStatusType} from "../store/app-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
+import {RequestStatusType} from "store/app-reducer";
 
 export type TaskPropsType = {
     task: ResponseTasksType,

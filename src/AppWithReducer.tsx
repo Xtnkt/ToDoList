@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react';
-import './App.css';
-import {Todolist} from "./features/Todolist/Todolist";
+import './App.module.css';
+import {Todolist} from "features/Todolist/Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "components/AddItemForm";
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -18,9 +18,9 @@ import {
     ChangeTodoListTitleAC, FilterButtonType,
     RemoveTodoListAC,
     todolistsReducer
-} from "./store/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
-import {ResponseTasksType, TaskStatuses} from "./api/todolist-api";
+} from "store/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "store/tasks-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 
 export type TodoListType = {
     id: string,
