@@ -60,7 +60,7 @@ function AppWithRedux() {
                 </Toolbar>
             </AppBar>
             <div className={s.linerProgress}>
-                {status === 'loading' && <LinearProgress  color="secondary"/>}
+                {status === 'loading' && <LinearProgress color="secondary"/>}
             </div>
             <Container fixed>
                 <Routes>

@@ -1,11 +1,11 @@
 import {AddTodoListAT, RemoveTodoListAT, SeEntityStatusAC, SeEntityStatusAT, SeTodoListsAT} from "./todolists-reducer";
 import {ResponseTasksType, ResultCode, TaskStatuses, todolistAPI, UpdateTaskType} from "api/todolist-api";
 import {Dispatch} from "redux";
-import {SetErrorAT, setLoadingStatusAC, SetLoadingStatusAT} from "store/app-reducer";
+import {appActions} from "store/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import axios from "axios";
 import {TasksStateType} from "features/Todolist/TodolistsList";
-import {AppRootStateType} from "store/store";
+import {AppRootStateType, AppThunk} from "store/store";
 
 type RemoveTaskAT = ReturnType<typeof removeTaskAC>
 type AddTaskAT = ReturnType<typeof addTaskAC>
@@ -21,9 +21,8 @@ type ActionsType = RemoveTaskAT
     | RemoveTodoListAT
     | SeTodoListsAT
     | SetTasksAT
-    | SetLoadingStatusAT
-    | SetErrorAT
     | SeEntityStatusAT
+
 
 export const removeTaskAC = (todolistId: string, taskId: string) =>
     ({type: "REMOVE-TASK", todolistId, taskId}) as const
@@ -94,8 +93,8 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
     }
 }
 
-export const getTasksTC = (todoId: string) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const getTasksTC = (todoId: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     try {
         const result = await todolistAPI.getTasks(todoId)
         dispatch(setTasksAC(result.items, todoId))
@@ -104,11 +103,11 @@ export const getTasksTC = (todoId: string) => async (dispatch: Dispatch<ActionsT
             handleServerNetworkError(dispatch, error)
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
 }
-export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const removeTaskTC = (todoId: string, taskId: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     dispatch(SeEntityStatusAC(todoId, 'loading'))
     try {
         const result = await todolistAPI.deleteTask(todoId, taskId)
@@ -124,11 +123,11 @@ export const removeTaskTC = (todoId: string, taskId: string) => async (dispatch:
             dispatch(SeEntityStatusAC(todoId, 'failed'))
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
 }
-export const addTasksTC = (todoId: string, title: string) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const addTasksTC = (todoId: string, title: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     dispatch(SeEntityStatusAC(todoId, 'loading'))
     try {
         const result = await todolistAPI.createTask(todoId, title)
@@ -146,11 +145,11 @@ export const addTasksTC = (todoId: string, title: string) => async (dispatch: Di
             dispatch(SeEntityStatusAC(todoId, 'failed'))
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
 }
-export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuses) =>
-    async (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuses): AppThunk =>
+    async (dispatch, getState: () => AppRootStateType) => {
 
         const tasks = getState().tasks
         const task = tasks[todoId].find((t) => t.id === taskId)
@@ -166,7 +165,7 @@ export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuse
                 completed: false
             }
 
-            dispatch(setLoadingStatusAC('loading'))
+            dispatch(appActions.setLoadingStatus({status: 'loading'}))
             dispatch(SeEntityStatusAC(todoId, 'loading'))
 
             try {
@@ -183,7 +182,7 @@ export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuse
                     dispatch(SeEntityStatusAC(todoId, 'failed'))
                 }
             } finally {
-                dispatch(setLoadingStatusAC('succeeded'))
+                dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
             }
         }
     }

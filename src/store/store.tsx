@@ -7,7 +7,6 @@ import {appReducer} from "store/app-reducer";
 import {authReducer} from "store/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
-
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
@@ -17,18 +16,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk).concat( и добавлять)
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk).concat( и добавлять другие middleWares).concat(...)
 })
-
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// export const _store = legacy_createStore(rootReducer, applyMiddleware(thunk));
 
 type AppDispatchType = ThunkDispatch<AppRootStateType, any, AnyAction>
 
@@ -36,6 +25,16 @@ export const AppDispatch = () => useDispatch<AppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>
 export type AppRootStateType = ReturnType<typeof rootReducer>
+
+
+// export const _store = legacy_createStore(rootReducer, applyMiddleware(thunk));
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // @ts-ignore
 window.store = store

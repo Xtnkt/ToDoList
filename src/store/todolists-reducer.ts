@@ -1,8 +1,8 @@
 import {ResponseTodoListType, ResultCode, todolistAPI} from "api/todolist-api";
-import {Dispatch} from "redux";
-import {RequestStatusType, SetErrorAT, setLoadingStatusAC, SetLoadingStatusAT} from "store/app-reducer";
+import {appActions, RequestStatusType} from "store/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import axios from "axios";
+import {AppThunk} from "store/store";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST',
@@ -30,9 +30,7 @@ type ActionType = RemoveTodoListAT
     | ChangeTodoListFilterAT
     | ChangeTodoListTitleAT
     | SeTodoListsAT
-    | SetLoadingStatusAT
     | SeEntityStatusAT
-    | SetErrorAT
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 export type TodolistDomainType = ResponseTodoListType & {
@@ -76,8 +74,8 @@ export const todolistsReducer = (todolists = initialState, action: ActionType): 
     }
 }
 
-export const getTodoTC = () => async (dispatch: Dispatch<ActionType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const getTodoTC = (): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status:'loading'}))
     try {
         const result = await todolistAPI.getTodoLists()
         dispatch(SeTodoListsAC(result))
@@ -86,11 +84,11 @@ export const getTodoTC = () => async (dispatch: Dispatch<ActionType>) => {
             handleServerNetworkError(dispatch, error)
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status:'succeeded'}))
     }
 }
-export const createTodolistTC = (title: string) => async (dispatch: Dispatch<ActionType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const createTodolistTC = (title: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status:'loading'}))
     try {
         const result = await todolistAPI.createTodoList(title)
         if (result.resultCode === ResultCode.SUCCEEDED) {
@@ -103,11 +101,11 @@ export const createTodolistTC = (title: string) => async (dispatch: Dispatch<Act
             handleServerNetworkError(dispatch, error)
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status:'succeeded'}))
     }
 }
-export const deleteTodolistTC = (todolistId: string) => async (dispatch: Dispatch<ActionType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const deleteTodolistTC = (todolistId: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status:'loading'}))
     dispatch(SeEntityStatusAC(todolistId, 'loading'))
 
     try {
@@ -123,11 +121,11 @@ export const deleteTodolistTC = (todolistId: string) => async (dispatch: Dispatc
             dispatch(SeEntityStatusAC(todolistId, 'failed'))
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status:'succeeded'}))
     }
 }
-export const changeTodolistTitleTC = (todolistId: string, title: string) => async (dispatch: Dispatch<ActionType>) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const changeTodolistTitleTC = (todolistId: string, title: string): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status:'loading'}))
     dispatch(SeEntityStatusAC(todolistId, 'loading'))
     try {
         const result = await todolistAPI.updateTodolistTitle(todolistId, title)
@@ -143,6 +141,6 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) => asyn
             dispatch(SeEntityStatusAC(todolistId, 'failed'))
         }
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status:'succeeded'}))
     }
 }

@@ -1,20 +1,20 @@
-import {Dispatch} from 'redux'
 import {authAPI, ResultCode} from "api/todolist-api";
 import {FormDataType} from "features/Login/Login";
-import {AppActionsType, setLoadingStatusAC} from "./app-reducer";
+import {appActions} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppThunk} from "store/store";
+
+type InitialStateType = {
+    isLoggedIn: boolean,
+    isInitialised: boolean,
+    nickname: null | string
+}
 
 const initialState: InitialStateType = {
     isLoggedIn: false,
     isInitialised: false,
     nickname: null
-}
-type InitialStateType = {
-    isLoggedIn: boolean,
-    isInitialised: boolean,
-    nickname: null | string
 }
 
 const slice = createSlice({
@@ -36,8 +36,8 @@ export const authReducer = slice.reducer
 export const authActions = slice.actions
 
 // thunks
-export const loginTC = (data: FormDataType):AppThunk => async (dispatch) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const loginTC = (data: FormDataType): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     try {
         const result = await authAPI.login(data)
         if (result.resultCode === ResultCode.SUCCEEDED) {
@@ -48,11 +48,11 @@ export const loginTC = (data: FormDataType):AppThunk => async (dispatch) => {
     } catch (error: any) {
         handleServerNetworkError(dispatch, error)
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
 }
-export const logOutTC = ():AppThunk => async (dispatch) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const logOutTC = (): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     try {
         const result = await authAPI.logOut()
         if (result.resultCode === ResultCode.SUCCEEDED) {
@@ -64,11 +64,11 @@ export const logOutTC = ():AppThunk => async (dispatch) => {
     } catch (error: any) {
         handleServerNetworkError(dispatch, error)
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
 }
-export const meTC = ():AppThunk => async (dispatch) => {
-    dispatch(setLoadingStatusAC('loading'))
+export const meTC = (): AppThunk => async (dispatch) => {
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
     try {
         const result = await authAPI.me()
         if (result.resultCode === ResultCode.SUCCEEDED) {
@@ -82,18 +82,15 @@ export const meTC = ():AppThunk => async (dispatch) => {
     } catch (error: any) {
         handleServerNetworkError(dispatch, error)
     } finally {
-        dispatch(setLoadingStatusAC('succeeded'))
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
     }
-
 }
-// types
-type ActionsType = ReturnType<typeof authActions.setIsLoggedIn>
-    | ReturnType<typeof authActions.setIsInitialised>
-    | ReturnType<typeof authActions.setNickname>
-    | AppActionsType
+//
+//type ActionsType = ReturnType<typeof authActions.setIsLoggedIn>
+//     | ReturnType<typeof authActions.setIsInitialised>
+//     | ReturnType<typeof authActions.setNickname>
+//     | AppActionsType
 
-//
-//
 // const _authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
 //     switch (action.type) {
 //         case 'login/SET-IS-LOGGED-IN':
