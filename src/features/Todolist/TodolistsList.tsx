@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import {
-    ChangeTodoListFilterAC, changeTodolistTitleTC,
+    todolistsActions,
+    changeTodolistTitleTC,
     createTodolistTC,
     deleteTodolistTC,
     FilterButtonType,
@@ -61,7 +62,7 @@ export const TodoListsList: React.FC = () => {
     }, []);
     //Update:
     const changeTodoListFilter = useCallback((filter: FilterButtonType, todoListId: string) => {
-        dispatch(ChangeTodoListFilterAC(filter, todoListId))
+        dispatch(todolistsActions.changeTodoListFilter({newFilter: filter, id: todoListId}))
     }, [])
     const changeTodoListTitle = useCallback((title: string, todoListId: string) => {
         dispatch(changeTodolistTitleTC(todoListId, title))

@@ -5,19 +5,18 @@ import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import DeleteIcon from "@mui/icons-material/Delete";
-import {CheckBox} from "./components/CheckBox";
-import {EditableSpan} from "./components/EditableSpan";
-import {AddItemForm} from "./components/AddItemForm";
+import {CheckBox} from "components/CheckBox";
+import {EditableSpan} from "components/EditableSpan";
+import {AddItemForm} from "components/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store/store";
+import {AppRootStateType} from "store/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {
-    ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, FilterButtonType,
-    RemoveTodoListAC,
+    FilterButtonType,
+    todolistsActions,
     TodolistDomainType
-} from "./store/todolists-reducer";
-import {ResponseTasksType, TaskStatuses} from "./api/todolist-api";
+} from "store/todolists-reducer";
+import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 
 export type TodolistReduxPropsType = {
     todoList: TodolistDomainType
@@ -31,7 +30,7 @@ export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
     const dispatch = useDispatch()
 
     const tsarChangeFilter = (filterValue: FilterButtonType) =>
-        () => dispatch(ChangeTodoListFilterAC(filterValue, id))
+        () => dispatch(todolistsActions.changeTodoListFilter({newFilter:filterValue, id:id}))
 
     if (filter === 'Active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New);
@@ -53,11 +52,11 @@ export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
         dispatch(action)
     }
     const removeTodoListHandler = () => {
-        let action = RemoveTodoListAC(id)
+        let action = todolistsActions.removeTodoList({id})
         dispatch(action)
     }
     const changeTodoListTitle = (title: string) => {
-        let action = ChangeTodoListTitleAC(title, id)
+        let action = todolistsActions.changeTodoListTitle({newTodolistTitle:title, id})
         dispatch(action)
     }
 

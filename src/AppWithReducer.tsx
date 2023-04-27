@@ -13,10 +13,8 @@ import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import Menu from "@mui/icons-material/Menu";
 import {
-    AddTodoListAC,
-    ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, FilterButtonType,
-    RemoveTodoListAC,
+   FilterButtonType,
+    todolistsActions,
     todolistsReducer
 } from "store/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "store/tasks-reducer";
@@ -113,23 +111,23 @@ function AppWithReducer() {
     //TodoLists
     //Delete:
     const removeTodoList = (todoListId: string) => {
-        let action = RemoveTodoListAC(todoListId)
+        let action = todolistsActions.removeTodoList({id:todoListId})
         dispatchToTodoLists(action)
         dispatchToTasks(action)
     }
     //Create:
     const addTodoList = (title: any) => {
-        let action = AddTodoListAC(title) // !!!
+        let action = todolistsActions.addTodoList({todolist:title}) // !!!
         dispatchToTodoLists(action)
         dispatchToTasks(action)
     }
     //Update:
     const changeTodoListFilter = (filter: FilterButtonType, todoListId: string) => {
-        let action = ChangeTodoListFilterAC(filter, todoListId)
+        let action = todolistsActions.changeTodoListFilter({newFilter:filter, id:todoListId})
         dispatchToTodoLists(action)
     }
     const changeTodoListTitle = (title: string, todoListId: string) => {
-        let action = ChangeTodoListTitleAC(title, todoListId)
+        let action = todolistsActions.changeTodoListTitle({newTodolistTitle:title, id:todoListId})
         dispatchToTodoLists(action)
     }
 
