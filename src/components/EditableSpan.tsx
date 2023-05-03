@@ -11,20 +11,25 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState(props.title);
     const onEditMode = () => {
+        setTitle(props.title)
         setIsEditMode(true)
+
     }
     const offEditMode = () => {
         setIsEditMode(false)
         props.changeTitle(title)
     }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.currentTarget.value)
+
+            setTitle(event.currentTarget.value)
+
+
     }
     return (
         isEditMode && !props.disabled
             ?
             <TextField
-                value={title}
+                value={isEditMode?title:'dqwq'}
                 autoFocus
                 onBlur={offEditMode}
                 onChange={onChangeHandler}/>

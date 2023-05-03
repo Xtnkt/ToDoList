@@ -17,7 +17,7 @@ import {
     todolistsActions,
     todolistsReducer
 } from "store/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "store/tasks-reducer";
+import {tasksActions, tasksReducer} from "store/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 
 export type TodoListType = {
@@ -89,22 +89,22 @@ function AppWithReducer() {
     //Tasks
     //Delete:
     const removeTask = (taskId: string, todoListId: string) => {
-        let action = removeTaskAC(taskId, todoListId)
+        let action = tasksActions.removeTask({taskId, todolistId:todoListId})
         dispatchToTasks(action)
         // dispatchToTasks(removeTaskAC(taskId,todoListId))
     }
     //Create:
-    const addTask = (todoListId: any, ) => {
-        let action = addTaskAC(todoListId)
+    const addTask = (task: any, ) => {
+        let action = tasksActions.addTask({task:task})
         dispatchToTasks(action)
     }
     //Update:
     const changeIsDone = (todolistId: any, status: any,taskId: any ) => {
-        let action = changeTaskStatusAC(taskId, status, todolistId)
+        let action = tasksActions.changeTaskStatus({taskId, status, todolistId})
         dispatchToTasks(action)
     }
     const changeTuskTitle = (taskId: string, title: string, todoListId: string) => {
-        let action = changeTaskTitleAC(taskId, title, todoListId)
+        let action = tasksActions.changeTaskTitle({taskId, title, todolistId:todoListId})
         dispatchToTasks(action)
     }
 

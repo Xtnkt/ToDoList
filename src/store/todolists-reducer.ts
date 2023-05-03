@@ -4,6 +4,7 @@ import {handleServerAppError, handleServerNetworkError} from "utils/error-utils"
 import axios from "axios";
 import {AppThunk} from "store/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authActions} from "store/auth-reducer";
 
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
@@ -47,6 +48,15 @@ const slice = createSlice({
         setTodoLists: (state, action: PayloadAction<{ todos: ResponseTodoListType[] }>) => {
             return action.payload.todos.map(todo => ({...todo, filter: 'All', entityStatus: "idle"}))
         },
+    },
+    extraReducers: builder => {
+        builder
+            .addCase(authActions.setIsLoggedIn, (state, action) => {
+                    if (!action.payload.isLoggedIn) {
+                        return state = []
+                    }
+                }
+            )
     }
 })
 export const todolistsReducer = slice.reducer
@@ -112,6 +122,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string): AppThu
             dispatch(todolistsActions.changeTodoListEntityStatus({id: todolistId, entityStatus: 'idle'}))
         } else {
             handleServerAppError(dispatch, result)
+            dispatch(todolistsActions.changeTodoListEntityStatus({id: todolistId, entityStatus: 'failed'}))
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {

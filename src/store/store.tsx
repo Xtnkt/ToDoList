@@ -1,7 +1,7 @@
 import {tasksReducer} from './tasks-reducer'
 import {todolistsReducer} from './todolists-reducer'
 import {AnyAction, combineReducers, compose} from 'redux'
-import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import  {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "store/app-reducer";
 import {authReducer} from "store/auth-reducer";

@@ -10,7 +10,7 @@ import {
 } from "store/todolists-reducer";
 import {AppDispatch, useAppSelector} from "store/store";
 import {tasksSelector, todolistsSelector} from "store/selectors";
-import {addTasksTC, changeTaskTitleAC, removeTaskTC, updateTaskTC} from "store/tasks-reducer";
+import {addTasksTC, removeTaskTC, updateTaskTC, tasksActions} from "store/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -48,7 +48,7 @@ export const TodoListsList: React.FC = () => {
         dispatch(updateTaskTC(todoListId, taskId, status))
     }, [])
     const changeTuskTitle = useCallback((taskId: string, title: string, todoListId: string) => {
-        let action = changeTaskTitleAC(taskId, title, todoListId)
+        let action = tasksActions.changeTaskTitle({taskId, title, todolistId: todoListId})
         dispatch(action)
     }, [])
     //TodoLists

@@ -10,7 +10,7 @@ import {EditableSpan} from "components/EditableSpan";
 import {AddItemForm} from "components/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "store/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
+import {tasksActions} from "./store/tasks-reducer";
 import {
     FilterButtonType,
     todolistsActions,
@@ -40,15 +40,15 @@ export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
     }
 
     const addTaskHandler = (title: any) => {
-        let action = addTaskAC(title)
+        let action = tasksActions.addTask(title)
         dispatch(action)
     }
     const removeTaskHandler = (tId: string) => {
-        let action = removeTaskAC(tId, id)
+        let action = tasksActions.removeTask({taskId:tId, todolistId:id})
         dispatch(action)
     }
     const changeIsDoneHandler = (status:any) => {
-        let action = changeTaskStatusAC('dwq','dwq',status)
+        let action = tasksActions.changeTaskStatus({todolistId:'dwq', taskId:'dwq', status})
         dispatch(action)
     }
     const removeTodoListHandler = () => {
@@ -63,7 +63,7 @@ export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
     const mapTasks = tasks.map((t) => {
 
         const changeTuskTitle = (title: string) => {
-            let action = changeTaskTitleAC(t.id, title, id)
+            let action = tasksActions.changeTaskTitle({taskId:t.id, title, todolistId:id})
             dispatch(action)
         }
         return (

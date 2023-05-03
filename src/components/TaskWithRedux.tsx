@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {EditableSpan} from "./EditableSpan";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "store/tasks-reducer";
+import {tasksActions} from "store/tasks-reducer";
 import {ResponseTasksType} from "api/todolist-api";
 
 export type TaskPropsType = {
@@ -17,13 +17,13 @@ export const TaskWithRedux = memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useDispatch()
 
     const changeTuskTitleHandler = (title: string) => {
-        dispatch(changeTaskTitleAC(task.id, title, todolistId))
+        dispatch(tasksActions.changeTaskTitle({taskId:task.id, title, todolistId}))
     }
     const removeTaskHandler = () => {
-        dispatch(removeTaskAC(task.id, todolistId))
+        dispatch(tasksActions.removeTask({taskId:task.id, todolistId}))
     }
     const changeIsDoneHandler = (taskId:any, status:any, todolistId:any) => {
-        dispatch(changeTaskStatusAC(taskId, status, todolistId))
+        dispatch(tasksActions.changeTaskStatus({taskId, status, todolistId}))
     }
     return (
         <ListItem key={task.id}
