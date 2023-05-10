@@ -7,16 +7,17 @@ import {
     FilterButtonType,
     getTodoTC,
     TodolistDomainType
-} from "store/todolists-reducer";
+} from "features/TodolistList/todolists-reducer";
 import {AppDispatch, useAppSelector} from "store/store";
 import {tasksSelector, todolistsSelector} from "store/selectors";
-import {addTasksTC, removeTaskTC, updateTaskTC, tasksActions} from "store/tasks-reducer";
+import {addTasksTC, removeTaskTC, updateTaskTC, tasksActions} from "features/TodolistList/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {Todolist} from "./Todolist";
+import {Todolist} from "features/TodolistList/TodoList/Todolist";
 import {AddItemForm} from "components/AddItemForm";
 import {Navigate} from "react-router-dom";
+import {selectIsLoggedIn} from "features/auth/auth.selectors";
 
 export type TasksStateType = {
     [todoListId: string]: ResponseTasksType[],
@@ -26,7 +27,7 @@ export const TodoListsList: React.FC = () => {
     //BLL
     const todoLists = useAppSelector<Array<TodolistDomainType>>(todolistsSelector)
     const tasks = useAppSelector<TasksStateType>(tasksSelector)
-    const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn)
     const dispatch = AppDispatch()
     //BLL
     useEffect(() => {

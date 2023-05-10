@@ -1,10 +1,10 @@
 import {ResponseTodoListType, ResultCode, todolistAPI} from "api/todolist-api";
-import {appActions, RequestStatusType} from "store/app-reducer";
+import {appActions, RequestStatusType} from "app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import axios from "axios";
 import {AppThunk} from "store/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {authActions} from "store/auth-reducer";
+import {authActions} from "features/auth/auth.reducer";
 
 
 export type FilterButtonType = 'All' | 'Active' | 'Completed'

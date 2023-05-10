@@ -1,9 +1,11 @@
-import {TasksStateType} from "App";
-import {todolistsActions, TodolistDomainType, todolistsReducer} from "./todolists-reducer";
-import {tasksReducer} from "./tasks-reducer";
+import {todolistsActions, TodolistDomainType, todolistsReducer} from "features/TodolistList/todolists-reducer";
+import {tasksReducer} from "features/TodolistList/tasks-reducer";
+import {ResponseTasksType} from "api/todolist-api";
 
 test('ids should be equals', () => {
-    const startTasksState: TasksStateType = {}
+    const startTasksState: {
+        [todoListId: string]: ResponseTasksType[]
+    } = {}
     const startTodolistsState: Array<TodolistDomainType> = []
 
     const newTodo = {
@@ -12,7 +14,7 @@ test('ids should be equals', () => {
         addedDate: 'string',
         order: 0,
     }
-    const action = todolistsActions.addTodoList({todolist:newTodo})
+    const action = todolistsActions.addTodoList({todolist: newTodo})
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)

@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {ResponseType} from "api/todolist-api";
-import {appActions} from "store/app-reducer";
+import {appActions} from "app/app-reducer";
 
 export const handleServerNetworkError = (dispatch: Dispatch, error: { message: string }) => {
     dispatch(appActions.setError({error: error.message ? error.message : 'Some error'}))

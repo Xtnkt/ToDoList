@@ -1,17 +1,17 @@
 import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "components/AddItemForm";
 import {EditableSpan} from "components/EditableSpan";
-import {Task} from "components/Task";
+import {Task} from "features/TodolistList/TodoList/Task/Task";
 import {AppDispatch} from "store/store";
-import {getTasksTC} from "store/tasks-reducer";
+import {getTasksTC} from "features/TodolistList/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
-import {FilterButtonType} from "store/todolists-reducer";
+import {FilterButtonType} from "features/TodolistList/todolists-reducer";
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import DeleteIcon from "@mui/icons-material/Delete";
-import {RequestStatusType} from "store/app-reducer";
+import {RequestStatusType} from "app/app-reducer";
 
 export type TodolistProps = {
     todoListId: string

@@ -10,19 +10,19 @@ import {EditableSpan} from "components/EditableSpan";
 import {AddItemForm} from "components/AddItemForm";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "store/store";
-import {tasksActions} from "./store/tasks-reducer";
+import {tasksActions} from "features/TodolistList/tasks-reducer";
 import {
     FilterButtonType,
     todolistsActions,
     TodolistDomainType
-} from "store/todolists-reducer";
+} from "features/TodolistList/todolists-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 
 export type TodolistReduxPropsType = {
     todoList: TodolistDomainType
 }
 
-export const TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
+export const _TodolistRedux: FC<TodolistReduxPropsType> = ({todoList}) => {
 
     const {id, title, filter} = todoList
 

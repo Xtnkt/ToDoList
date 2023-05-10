@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import s from './App.module.css';
+import s from 'app/App.module.css';
 import {AppDispatch, useAppSelector} from "store/store";
 import Typography from "@mui/material/Typography";
 import AppBar from '@mui/material/AppBar';
@@ -10,20 +10,21 @@ import Toolbar from '@mui/material/Toolbar';
 import Menu from "@mui/icons-material/Menu";
 import LinearProgress from "@mui/material/LinearProgress";
 import {ErrorSnackbar} from "components/ErrorSnackbar";
-import {TodoListsList} from "features/Todolist/TodolistsList";
+import {TodoListsList} from "features/TodolistList/TodolistsList";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "features/Login/Login";
+import {Login} from "features/login/Login";
 import {Error404} from "components/ErrorPage/Error404";
-import {logOutTC, meTC} from "store/auth-reducer";
-import {RequestStatusType} from "store/app-reducer";
+import {logOutTC, meTC} from "features/auth/auth.reducer";
+import {RequestStatusType} from "app/app-reducer";
 import {CircularProgress} from "@mui/material";
+import {selectIsInitialised, selectIsLoggedIn, selectNickname} from "features/auth/auth.selectors";
 
-function AppWithRedux() {
+function App() {
     const dispatch = AppDispatch()
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
-    const isInitialised = useAppSelector<boolean>(state => state.auth.isInitialised)
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-    const nickname = useAppSelector<string | null>(state => state.auth.nickname)
+    const isInitialised = useAppSelector<boolean>(selectIsInitialised)
+    const isLoggedIn = useAppSelector<boolean>(selectIsLoggedIn)
+    const nickname = useAppSelector<string | null>(selectNickname)
 
     const logOutHandler = () => {
         dispatch(logOutTC())
@@ -75,4 +76,4 @@ function AppWithRedux() {
     );
 }
 
-export default AppWithRedux;
+export default App;

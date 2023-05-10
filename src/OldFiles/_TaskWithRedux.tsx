@@ -2,9 +2,9 @@ import React, {memo} from 'react';
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "components/EditableSpan";
 import {useDispatch} from "react-redux";
-import {tasksActions} from "store/tasks-reducer";
+import {tasksActions} from "features/TodolistList/tasks-reducer";
 import {ResponseTasksType} from "api/todolist-api";
 
 export type TaskPropsType = {
@@ -12,7 +12,7 @@ export type TaskPropsType = {
     todolistId: string
 }
 
-export const TaskWithRedux = memo(({task, todolistId}: TaskPropsType) => {
+export const _TaskWithRedux = memo(({task, todolistId}: TaskPropsType) => {
 
     const dispatch = useDispatch()
 

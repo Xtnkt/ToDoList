@@ -1,6 +1,6 @@
 import {authAPI, ResultCode} from "api/todolist-api";
-import {FormDataType} from "features/Login/Login";
-import {appActions} from "./app-reducer";
+import {FormDataType} from "features/login/Login";
+import {appActions} from "app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppThunk} from "store/store";

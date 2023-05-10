@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import Task from "../components/Task";
+import Task from "features/TodolistList/TodoList/Task/Task";
 import {ReduxStoreProviderDecorator} from "store/ReduxStoreProviderDecorator";
 import {TaskStatuses} from "api/todolist-api";
 

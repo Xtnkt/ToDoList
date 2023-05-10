@@ -4,7 +4,7 @@ import {
     TodolistDomainType,
     todolistsActions,
     todolistsReducer
-} from "store/todolists-reducer";
+} from "features/TodolistList/todolists-reducer";
 
 
 let todolistId1: string;
@@ -54,7 +54,7 @@ test('correct filter of todolist should be changed', () => {
 });
 test('correct todolist should change its name', () => {
 
-    let newTodolistTitle = "New Todolist";
+    let newTodolistTitle = "New TodolistList";
 
     const endState = todolistsReducer(startState,
         todolistsActions.changeTodoListTitle({newTodolistTitle, id: todolistId2}));
