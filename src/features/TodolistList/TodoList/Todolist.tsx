@@ -3,7 +3,7 @@ import {AddItemForm} from "components/AddItemForm";
 import {EditableSpan} from "components/EditableSpan";
 import {Task} from "features/TodolistList/TodoList/Task/Task";
 import {AppDispatch} from "store/store";
-import {getTasksTC} from "features/TodolistList/tasks-reducer";
+import {tasksThunks} from "features/TodolistList/tasks-reducer";
 import {ResponseTasksType, TaskStatuses} from "api/todolist-api";
 import {FilterButtonType} from "features/TodolistList/todolists-reducer";
 import Button from '@mui/material/Button'
@@ -34,7 +34,7 @@ export const Todolist = React.memo((props: TodolistProps) => {
     const dispatch = AppDispatch()
 
     useEffect(() => {
-        dispatch(getTasksTC(props.todoListId))
+        dispatch(tasksThunks.getTasks(props.todoListId))
     }, [])
 
     const tsarChangeFilter = useCallback((filterValue: FilterButtonType) =>

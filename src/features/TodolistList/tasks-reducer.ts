@@ -5,8 +5,25 @@ import {handleServerAppError, handleServerNetworkError} from "utils/error-utils"
 import axios from "axios";
 import {TasksStateType} from "features/TodolistList/TodolistsList";
 import {AppRootStateType, AppThunk} from "store/store";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authActions} from "features/auth/auth.reducer";
+
+const getTasks = createAsyncThunk('tasks/getTasks', async (todoId: string, thunkAPI) => {
+    const {dispatch, rejectWithValue} = thunkAPI
+    dispatch(appActions.setLoadingStatus({status: 'loading'}))
+    try {
+        const result = await todolistAPI.getTasks(todoId)
+        return {tasks: result.items, todolistId: todoId}
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            handleServerNetworkError(dispatch, error)
+        }
+        return rejectWithValue(error)
+    } finally {
+        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
+    }
+})
+
 
 const initialState: TasksStateType = {}
 
@@ -37,12 +54,12 @@ const slice = createSlice({
                 tasks[index] = {...tasks[index], title: action.payload.title}
             }
         },
-        setTasks: (state, action: PayloadAction<{ tasks: ResponseTasksType[], todolistId: string }>) => {
-            state[action.payload.todolistId] = action.payload.tasks
-        },
     },
     extraReducers: builder => {
         builder
+            .addCase(getTasks.fulfilled, (state, action) => {
+                    state[action.payload.todolistId] = action.payload.tasks
+            })
             .addCase(todolistsActions.addTodoList, (state, action) => {
                 state[action.payload.todolist.id] = []
             })
@@ -64,20 +81,9 @@ const slice = createSlice({
 
 export const tasksReducer = slice.reducer
 export const tasksActions = slice.actions
+export const tasksThunks = {getTasks}
 
-export const getTasksTC = (todoId: string): AppThunk => async (dispatch) => {
-    dispatch(appActions.setLoadingStatus({status: 'loading'}))
-    try {
-        const result = await todolistAPI.getTasks(todoId)
-        dispatch(tasksActions.setTasks({tasks: result.items, todolistId: todoId}))
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            handleServerNetworkError(dispatch, error)
-        }
-    } finally {
-        dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
-    }
-}
+
 export const removeTaskTC = (todoId: string, taskId: string): AppThunk => async (dispatch) => {
     dispatch(appActions.setLoadingStatus({status: 'loading'}))
     dispatch(todolistsActions.changeTodoListEntityStatus({id: todoId, entityStatus: 'loading'}))
@@ -229,5 +235,18 @@ export const updateTaskTC = (todoId: string, taskId: string, status: TaskStatuse
 //         }
 //         default:
 //             return state
+//     }
+// }
+// export const getTasksTC = (todoId: string): AppThunk => async (dispatch) => {
+//     dispatch(appActions.setLoadingStatus({status: 'loading'}))
+//     try {
+//         const result = await todolistAPI.getTasks(todoId)
+//         dispatch(tasksActions.setTasks({tasks: result.items, todolistId: todoId}))
+//     } catch (error) {
+//         if (axios.isAxiosError(error)) {
+//             handleServerNetworkError(dispatch, error)
+//         }
+//     } finally {
+//         dispatch(appActions.setLoadingStatus({status: 'succeeded'}))
 //     }
 // }
