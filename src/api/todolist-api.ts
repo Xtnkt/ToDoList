@@ -77,7 +77,7 @@ export const authAPI = {
             .then((res) => res.data)
     },
     me(){
-        return instance.get<ResponseType<{ email:string,id: number,login:string }>>('auth/me')
+        return instance.get<ResponseType<{ id: number, email:string,login:string }>>('auth/me')
             .then((res) => res.data)
     },
     logOut(){
